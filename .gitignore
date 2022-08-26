@@ -4,7 +4,7 @@ vendor/
 
 # Local configs
 config/autoload/*.local.php
-.idea/
+.idea/*
 
 # Binary gettext files
 *.mo
@@ -23,3 +23,4 @@ data/DoctrineORMModule/cache/
 # Legacy ZF1
 demos/
 extras/documentation
+.idea/workspace.xml
