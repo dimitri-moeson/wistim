@@ -1,0 +1,87 @@
+<?php
+    
+    $title = $this->translate("Sign Up");
+    
+    $this->headTitle($this->escapeHtml($title));
+    
+    $this->headMeta()->appendName('keywords',$title);
+    $this->headMeta()->appendName('description',$title);
+    
+    $form = $this->form;
+    
+    $form->setAttribute('action', $this->url('sign-up'));
+    $form->prepare();
+    
+    ?>
+
+<div class="container">
+    
+    <div class="row">
+        <div class="col-md-5 shadow-sm">
+            <h3 class="mb-3 pt-2 text-md-center">
+                <?= $this->escapeHtml($this->translate("New Account")) ?>
+            </h3>
+    
+            <?= $this->form()->openTag($form) ?>
+            
+            <span class="form-text text-muted pb-2">
+                <?= sprintf($this->translate("Already have an account ? %sLogin here%s"),
+                    '<a href="'.$this->url('sign-in').'">',"</a>"
+                    ) ?>
+
+            </span>
+            
+            <!-- firstname input field -->
+            <div class="mb-3">
+                <?= $this->formLabel($form->get('firstname'))?>
+                <div class="form-group"><?= $this->formText($form->get('firstname'))?></div>
+                <div class="text-danger"> <?= $this->formElementErrors($form->get('firstname'))?></div>
+            </div>
+
+            <!-- lastname input field -->
+            <div class="mb-3">
+                <?= $this->formLabel($form->get('lastname'))?>
+                <div class="form-group"><?= $this->formText($form->get('lastname'))?></div>
+                <div class="text-danger"> <?= $this->formElementErrors($form->get('lastname'))?></div>
+            </div>
+
+            <!-- birthday input field -->
+            <div class="mb-3">
+                <?= $this->formLabel($form->get('birthday'))?>
+                <div class="form-group"><?= $this->formDateSelect($form->get('birthday'))?></div>
+                <div class="text-danger"> <?= $this->formElementErrors($form->get('birthday'))?></div>
+            </div>
+
+            <!-- email input field -->
+            <div class="mb-3">
+                <?= $this->formLabel($form->get('email'))?>
+                <div class="form-group"><?= $this->formEmail($form->get('email'))?></div>
+                <div class="text-danger"> <?= $this->formElementErrors($form->get('email'))?></div>
+            </div>
+
+            <!-- password input field -->
+            <div class="mb-3">
+                <?= $this->formLabel($form->get('password'))?>
+                <div class="form-group"><?= $this->formPassword($form->get('password'))?></div>
+                <div class="text-danger"> <?= $this->formElementErrors($form->get('password'))?></div>
+            </div>
+
+            <!-- conf_password input field -->
+            <div class="mb-3">
+                <?= $this->formLabel($form->get('conf_password'))?>
+                <div class="form-group"><?= $this->formPassword($form->get('conf_password'))?></div>
+                <div class="text-danger"> <?= $this->formElementErrors($form->get('conf_password'))?></div>
+            </div>
+            
+            <!-- CSRF and submit fields -->
+            <div class="mb-3 float-right">
+                <?= $this->formHidden($form->get('csrf')) ;?>
+                <div class="text-danger"> <?= $this->formElementErrors($form->get('csrf'))?></div>
+                <div class="form-group"><?= $this->formSubmit($form->get('create_account'))?></div>
+            </div>
+    
+            <?= $this->form()->closeTag($form) ?>
+            
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<?php
+    /**
+     * Created by PhpStorm.
+     * User: admin
+     * Date: 26/08/2022
+     * Time: 19:16
+     */
+    declare(strict_types=1);
+    
+    namespace User\Controller;
+    
+    use Laminas\Authentication\AuthenticationService;
+    use Laminas\Mvc\Controller\AbstractActionController;
+    use Laminas\View\Model\ViewModel;
+
+    class ProfileController extends AbstractActionController
+    {
+        public function indexAction()
+        {
+            $auth = new AuthenticationService();
+    
+            if($auth->hasIdentity()){
+        
+        
+            }
+            return new ViewModel();
+        }
+    }
