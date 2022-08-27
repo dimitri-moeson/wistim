@@ -1,1 +1,56 @@
-profile page
+<div class="table-responsive">
+    
+    <h1>Medicaments</h1>
+    
+    <table class="table table-striped table-sm">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>nom</th>
+            <th>photo</th>
+            <th>classe</th>
+            <th>voie d'administration</th>
+            <th>DCI</th>
+            <th>Dosage</th>
+            <th>Unité</th>
+            <th></th>
+        </tr>
+        </thead>
+        
+        <tbody>
+        
+            <?php  foreach($this->medicaments as $medoc ){
+                
+                /**
+                 * @var User\Model\Entity\MedicamentEntity $medoc
+                 */
+                ?>
+                <tr>
+                    <td><?= $medoc->getMedicamentId(); ?></td>
+                    <td><?= $medoc->getName(); ?></td>
+                    <td><img src="images/<?= $medoc->getPhoto(); ?>" alt="<?= $medoc->getPhoto(); ?>"></td>
+                    <td><?= $medoc->getClasseId(); ?></td>
+                    <td><?= $medoc->getAdministration(); ?></td>
+                    <td><?= $medoc->getDci(); ?></td>
+                    <td><?= $medoc->getDosage(); ?></td>
+                    <td><?= $medoc->getUnite(); ?></td>
+
+                    <td>
+                        <a href="<?= $this->url('edit',['id' => $medoc->getMedicamentId() ]) ?>">edit</a>
+                        <a href="<?= $this->url('remove',['id' => $medoc->getMedicamentId() ]) ?>" onclick="return confirm('Are you sure?')">delete</a>
+                    </td>
+                </tr>
+            
+            <?php } ?>
+
+            <tr>
+            <td colspan="8"></td>
+
+            <td>
+                <a href="<?= $this->url('add') ?>">add</a>
+            </td>
+            </tr>
+        
+        </tbody>
+    </table>
+</div>

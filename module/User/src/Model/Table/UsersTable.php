@@ -217,21 +217,21 @@
                             ]
                         ],
                         [
-                                "name" => I18n\Validator\Alnum::class,
-                                "options" => [
-                                    "messages" =>[
+                            "name" => I18n\Validator\Alnum::class,
+                            "options" => [
+                                "messages" =>[
                                         I18n\Validator\Alnum::NOT_ALNUM => "Firstname must consist of alphanumeric character only"
-                                    ]
                                 ]
-                            ],
+                            ]
+                        ],
                         [
-                                "name" => Validator\Db\NoRecordExists::class,
-                                "options" =>[
-                                    "adapter"=>$this->adapter,
-                                    "table"=> $this->table,
-                                    "field" => "firstname"
-                                ],
+                            "name" => Validator\Db\NoRecordExists::class,
+                            "options" =>[
+                                "adapter"=>$this->adapter,
+                                "table"=> $this->table,
+                                "field" => "firstname"
                             ],
+                        ],
                     ],
                 ])
             );
