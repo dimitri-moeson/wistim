@@ -10,32 +10,21 @@
     
     namespace User\Controller;
     
-    use Laminas\Authentication\AuthenticationService;
-    use Laminas\Mvc\Controller\AbstractActionController;
     use Laminas\View\Model\ViewModel;
     use User\Form\Auth\CreateForm;
-    use User\Model\Table\UsersTable;
+    use User\Translate\TranslateAction;
 
-    class AuthController extends AbstractActionController
+    class AuthController extends __GlobalUserController
     {
-        private $usersTable;
-    
-        public function __construct(UsersTable $usersTable)
-        {
-            $this->usersTable = $usersTable;
-        }
-    
-    
         /**
          * only visitors with no session access this page
          *
          * @return \Laminas\View\Model\ViewModel
          */
-        public function createAction(){
-        
-            $auth = new AuthenticationService();
+        public function createAction()
+        {
             
-            if($auth->hasIdentity())
+            if($this->auth->hasIdentity())
                 return $this->redirect()->toRoute("home");
             
             $createForm = new CreateForm();
@@ -53,7 +42,7 @@
                         $data = $createForm->getData();
                         $this->usersTable->saveAccount($data);
                         
-                        $this->flashMessenger()->addSuccessMessage('Account successfully created.');
+                        $this->flashMessenger()->addSuccessMessage(TranslateAction::getInstance()->_('Account successfully created.'));
     
                         return $this->redirect()->toRoute("sign-in");
                         
@@ -66,7 +55,8 @@
             }
             
             return new ViewModel([
-                'form' => $createForm
+                'form' => $createForm,
+                "trad" => $this->trad,
             ]);
         }
     }

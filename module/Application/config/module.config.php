@@ -31,6 +31,16 @@ return [
                     ],
                 ],
             ],
+            'set-locale' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/set-locale/[:locale]',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action'     => 'locale',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [

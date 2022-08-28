@@ -33,7 +33,10 @@
         "laminas/laminas-math": "^3.5",
         "laminas/laminas-servicemanager": "^3.16",
         "laminas/laminas-crypt": "^3.8",
-        "masterexploder/phpthumb": "^2.1"
+        "masterexploder/phpthumb": "^2.1",
+        "mezzio/mezzio": "^3.11",
+        "mezzio/mezzio-router": "^3.8",
+        "mezzio/mezzio-skeleton": "^3.11"
     },
     "repositories": [ { "type": "vcs", "url": "https://github.com/monter08/PHPThumb" }],
     "autoload": {

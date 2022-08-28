@@ -10,7 +10,9 @@
     
     use Laminas\Form\Form;
     use Laminas\Form\Element;
+    use User\Form\Auth\InputFormat;
     use User\Model\Table\ClassesTable;
+    use User\Translate\TranslateAction;
 
 
     class MedicamentForm extends Form
@@ -25,41 +27,13 @@
             ]);
     
             # medicament_id input field
-            $this->add([
-                "type" => Element\Hidden::class ,
-                "name" => "medicament_id",
-                "attributes" => [
-                    "required" => false ,
-                ]
-            ]);
+            $this->add( InputFormat::hidden_input("medicament_id",false));
     
             # user_id input field
-            $this->add([
-                "type" => Element\Hidden::class ,
-                "name" => "user_id",
-                "attributes" => [
-                    "required" => true ,
-                ]
-            ]);
+            $this->add(InputFormat::hidden_input("user_id",true));
             
             # name input field
-            $this->add([
-                "type" => Element\Text::class ,
-                "name" => "name",
-                "options" => [
-                    "label" => "Name"
-                ],
-                "attributes" => [
-                    "required" => true ,
-                    "size" => 40 ,
-                    "maxlength" => 25,
-                    "pattern" => '^[a-zA-z0-9]+$',
-                    "data-toggle" => 'tooltip',
-                    "class" => "form-control",
-                    "title" => "Name must consist of alphanumeric characters only",
-                    "placeholder" => "Enter  your lastname"
-                ]
-            ]);
+            $this->add(InputFormat::text_input("name","Name"));
     
             # photo input field
             $this->add([
@@ -80,102 +54,29 @@
             ]);
     
             # dosage input field
-            $this->add([
-                "type" => Element\Number::class ,
-                "name" => "dosage",
-                "options" => [
-                    "label" => "Dosage"
-                ],
-                "attributes" => [
-                    "required" => true ,
-                    "size" => 40 ,
-                    "maxlength" => 25,
-                    "pattern" => '^[a-zA-z0-9]+$',
-                    "data-toggle" => 'tooltip',
-                    "class" => "form-control",
-                    "title" => "Name must consist of alphanumeric characters only",
-                    "placeholder" => "Enter  your lastname"
-                ]
-            ]);
+            $this->add(InputFormat::integer_input("dosage", "Dosage"));
             
-            /**
-             *  protected $id;
-            protected $dci;
-             */
+            # dci input field
+            $this->add(InputFormat::text_input("dci","DCI"));
     
             # classe input field
-            $this->add([
-                "type" => Element\Select::class ,
-                "name" => "classe_id",
-                "options" => [
-                    "label" => "select classe",
-                    "create_empty_option" => true,
-                    "empty_option" => "Select...",
-                    "value_options" => $classesTable->fetchAllClasses(),
-                ],
-                "attributes" => [
-                    "required" => true ,
-                    "class" => "custom-select"
-                ]
-            ]);
+            $this->add(InputFormat::select("classe_id","Class",$classesTable->fetchAllClasses() ));
             
             # administration input field
-            $this->add([
-                "type" => Element\Select::class ,
-                "name" => "administration",
-                "options" => [
-                    "label" => "select administration",
-                    "create_empty_option" => true,
-                    "empty_option" => "Select...",
-                    "value_options" =>[
-                        "oral" => "Oral",
-                        "respiratoire" => "respiratoire",
-                        "injection"  => "injection",
-                    ]
-                ],
-                "attributes" => [
-                    "required" => true ,
-                    "class" => "custom-select"
-                ]
-            ]);
+            $this->add(InputFormat::select("administration","Route",[
+                "Oral" => TranslateAction::getInstance()->_("Oral"),
+                "Respiratoire" =>  TranslateAction::getInstance()->_("Respiratoire"),
+                "Injection"  =>  TranslateAction::getInstance()->_("Injection"),
+            ] ));
+           
             
             # unite input field
-            $this->add([
-                "type" => Element\Number::class ,
-                "name" => "unite",
-                "options" => [
-                    "label" => "Unité"
-                ],
-                "attributes" => [
-                    "required" => true ,
-                    "size" => 40 ,
-                    "maxlength" => 25,
-                    "data-toggle" => 'tooltip',
-                    "class" => "form-control",
-                    "title" => "Name must consist of numeric characters only",
-                    "placeholder" => "Enter your unity"
-                ]
-            ]);
+            $this->add(InputFormat::integer_input("unite","Unity"));
             
             # CSRF field
-            $this->add([
-                "type" => Element\Csrf::class ,
-                "name" => "csrf",
-                "options" => [
-                    "csrf_options" => [
-                        "timeout" => 300,
-                    ]
-                ],
-            ]);
+            $this->add( InputFormat::csrf_input());
     
             # submit button
-            $this->add([
-                "type" => Element\Submit::class,
-                "name" => 'create_account',
-                "attributes" => [
-                    "value" => "Create Account",
-                    "class" => "btn btn-primary"
-                ],
-            ]);
+            $this->add(InputFormat::submit_input('medicament_save', "Record"));
         }
     }

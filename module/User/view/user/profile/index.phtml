@@ -1,18 +1,18 @@
 <div class="table-responsive">
     
-    <h1>Medicaments</h1>
+    <h1><?= $this->escapeHtml($this->trad->_("Medicaments")) ?></h1>
     
     <table class="table table-striped table-sm">
         <thead>
         <tr>
             <th>#</th>
-            <th>nom</th>
-            <th>photo</th>
-            <th>classe</th>
-            <th>voie d'administration</th>
-            <th>DCI</th>
+            <th><?= $this->escapeHtml($this->trad->_("Name")) ?></th>
+            <th><?= $this->escapeHtml($this->trad->_("Picture")) ?></th>
+            <th><?= $this->escapeHtml($this->trad->_("Class")) ?></th>
+            <th><?= $this->escapeHtml($this->trad->_("Route")) ?></th>
+            <th><?= $this->escapeHtml($this->trad->_("DCI")) ?></th>
             <th>Dosage</th>
-            <th>Unité</th>
+            <th><?= $this->escapeHtml($this->trad->_("Unity")) ?></th>
             <th></th>
         </tr>
         </thead>
@@ -22,6 +22,7 @@
             <?php  foreach($this->medicaments as $medoc ){
                 
                 /**
+                 * @var Laminas\View\Renderer\PhpRenderer $this
                  * @var User\Model\Entity\MedicamentEntity $medoc
                  */
                 ?>
@@ -30,14 +31,18 @@
                     <td><?= $medoc->getName(); ?></td>
                     <td><img src="images/<?= $medoc->getPhoto(); ?>" alt="<?= $medoc->getPhoto(); ?>"></td>
                     <td><?= $medoc->getClasseId(); ?></td>
-                    <td><?= $medoc->getAdministration(); ?></td>
+                    <td><?= $this->trad->_($medoc->getAdministration()); ?></td>
                     <td><?= $medoc->getDci(); ?></td>
                     <td><?= $medoc->getDosage(); ?></td>
                     <td><?= $medoc->getUnite(); ?></td>
 
                     <td>
-                        <a href="<?= $this->url('edit',['id' => $medoc->getMedicamentId() ]) ?>">edit</a>
-                        <a href="<?= $this->url('remove',['id' => $medoc->getMedicamentId() ]) ?>" onclick="return confirm('Are you sure?')">delete</a>
+                        <a href="<?= $this->url('edit',['id' => $medoc->getMedicamentId() ]) ?>"
+                            ><?= $this->trad->_("Edit") ?></a>
+                        
+                        <a href="<?= $this->url('remove',['id' => $medoc->getMedicamentId() ]) ?>"
+                           onclick="return confirm('<?= $this->trad->_("Are you sure ?") ?>')"
+                            ><?= $this->trad->_("Delete") ?></a>
                     </td>
                 </tr>
             
@@ -47,7 +52,8 @@
             <td colspan="8"></td>
 
             <td>
-                <a href="<?= $this->url('add') ?>">add</a>
+                <a href="<?= $this->url('add') ?>"
+                    ><?= $this->trad->_("Add") ?></a>
             </td>
             </tr>
         

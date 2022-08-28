@@ -6,4 +6,10 @@ $(function(){
 
     });
 
+    $('#select_locale').change(function(){
+
+        window.location.href = $(this).attr("target")+$(this).val() ;
+    })
+
+
 });

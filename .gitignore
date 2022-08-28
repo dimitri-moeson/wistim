@@ -15,6 +15,7 @@ data/cache/
 data/sessions/
 data/tmp/
 temp/
+public/images/
 
 #Doctrine 2
 data/DoctrineORMModule/Proxy/

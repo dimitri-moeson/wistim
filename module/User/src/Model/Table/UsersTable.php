@@ -17,6 +17,7 @@
     use Laminas\Filter;
     use Laminas\Validator;
     use Laminas\I18n;
+    use User\Form\Auth\InputFormat;
     use User\Model\Entity\UserEntity;
 
     class UsersTable extends AbstractTableGateway
@@ -159,26 +160,7 @@
             
             # filter and validate csrf hidden field
             $inputFilter->add(
-                $factory->createInput([
-            
-                    "name" => "csrf",
-                    "required" => true,
-                    "filters" => [
-                        ["name" => Filter\StripTags::class ],
-                        ["name" => Filter\StringTrim::class ],
-                    ],
-                    "validator" => [
-                        ["name" => Validator\NotEmpty::class ],
-                        [
-                            "name" => Validator\Csrf::class,
-                            "options" =>[
-                                "messages" =>[
-                                    Validator\Csrf::NOT_SAME => 'Oops ! Refill the form.',
-                                ]
-                            ]
-                        ],
-                    ],
-                ])
+                $factory->createInput(InputFormat::csrf_validator())
             );
     
             return $inputFilter ;
@@ -404,26 +386,7 @@
     
             # filter and validate csrf hidden field
             $inputFilter->add(
-                $factory->createInput([
-            
-                    "name" => "csrf",
-                    "required" => true,
-                    "filters" => [
-                        ["name" => Filter\StripTags::class ],
-                        ["name" => Filter\StringTrim::class ],
-                    ],
-                    "validator" => [
-                        ["name" => Validator\NotEmpty::class ],
-                        [
-                            "name" => Validator\Csrf::class,
-                            "options" =>[
-                                "messages" =>[
-                                    Validator\Csrf::NOT_SAME => 'Oops ! Refill the form.',
-                                ]
-                            ]
-                        ],
-                    ],
-                ])
+                $factory->createInput(InputFormat::csrf_validator())
             );
     
             return $inputFilter ;

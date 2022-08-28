@@ -1,6 +1,12 @@
 <?php
+    /**
+     * @var \Laminas\View\Renderer\PhpRenderer $this
+     * @var \Laminas\View\Model\ViewModel $this
+     * @var \Laminas\View\View $this
+     * @var Laminas\I18n\Translator\Translator $this
+     */
     
-    $title = $this->translate("Sign Up");
+    $title = $this->trad->_("Sign Up");
     
     $this->headTitle($this->escapeHtml($title));
     
@@ -19,13 +25,13 @@
     <div class="row">
         <div class="col-md-5 shadow-sm">
             <h3 class="mb-3 pt-2 text-md-center">
-                <?= $this->escapeHtml($this->translate("New Account")) ?>
+                <?= $this->escapeHtml($this->trad->_("New Account")) ?>
             </h3>
     
             <?= $this->form()->openTag($form) ?>
             
             <span class="form-text text-muted pb-2">
-                <?= sprintf($this->translate("Already have an account ? %sLogin here%s"),
+                <?= sprintf($this->trad->_("Already have an account ? %sLogin here%s"),
                     '<a href="'.$this->url('sign-in').'">',"</a>"
                     ) ?>
 

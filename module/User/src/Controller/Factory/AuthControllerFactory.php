@@ -13,6 +13,7 @@
     
     use Interop\Container\ContainerInterface;
     use Interop\Container\Exception\ContainerException;
+    use Laminas\Db\Adapter\Adapter;
     use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
     use Laminas\ServiceManager\Exception\ServiceNotFoundException;
     use Laminas\ServiceManager\Factory\FactoryInterface;
@@ -36,6 +37,7 @@
         public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
         {
             return new AuthController(
+                $container->get(Adapter::class),
                 $container->get(UsersTable::class)
             );
         }

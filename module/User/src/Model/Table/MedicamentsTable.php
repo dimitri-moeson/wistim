@@ -243,9 +243,11 @@
                 "classe_id" => $data["classe_id"],
                 "administration" => $data["administration"],
                 "dosage" => $data["dosage"],
+                "dci" => $data["dci"],
                 "unite" => $data["unite"],
-                "photo" => $data["photo"],
             ];
+            
+            if(isset($data['photo'])) $values["photo"] = $data["photo"];
             
             if($data["medicament_id"] =="") {
                 $sqlQuery = $this->getSql()->insert()->values($values);

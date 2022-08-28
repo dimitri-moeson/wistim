@@ -1,6 +1,8 @@
 <?php
-  
-    $title = $this->translate("Medic form");
+    /**
+     * @var Laminas\View\Renderer\PhpRenderer $this
+     */
+    $title = $this->trad->_("Medic form");
     
     $this->headTitle($this->escapeHtml($title));
     
@@ -39,7 +41,7 @@
                 
                 <?php if(isset($medicament)){?>
 
-                    <img src="images/<?= $medicament['photo'] ?>" alt="images/<?= $medicament['photo'] ?>">
+                    <img src="<?=  $this->basePath("images/".$medicament['photo']) ?>" alt="images/<?= $medicament['photo'] ?>">
                     
                 <?php } ?>
             </div>
@@ -57,7 +59,14 @@
                 <div class="form-group"><?= $this->formSelect($form->get('administration'))?></div>
                 <div class="text-danger"> <?= $this->formElementErrors($form->get('administration'))?></div>
             </div>
-    
+
+            <!-- DCI input field -->
+            <div class="mb-3">
+                <?= $this->formLabel($form->get('dci'))?>
+                <div class="form-group"><?= $this->formText($form->get('dci'))?></div>
+                <div class="text-danger"> <?= $this->formElementErrors($form->get('dci'))?></div>
+            </div>
+            
             <!-- dosage input field -->
             <div class="mb-3">
                 <?= $this->formLabel($form->get('dosage'))?>
@@ -78,7 +87,7 @@
                 <?= $this->formHidden($form->get('user_id')) ;?>
                 <?= $this->formHidden($form->get('csrf')) ;?>
                 <div class="text-danger"> <?= $this->formElementErrors($form->get('csrf'))?></div>
-                <div class="form-group"><?= $this->formSubmit($form->get('create_account'))?></div>
+                <div class="form-group"><?= $this->formSubmit($form->get('medicament_save'))?></div>
             </div>
             
             <?= $this->form()->closeTag($form) ?>

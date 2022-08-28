@@ -6,8 +6,15 @@
     
     $this->headMeta()->appendName('keywords',$title);
     $this->headMeta()->appendName('description',$title);
-    
+    /**
+     *
+     */
     $form = $this->form;
+    
+    /**
+     *  @var \User\Form\Auth\LoginForm $form
+     * @var Laminas\View\Renderer\PhpRenderer $this
+     */
     
     $form->setAttribute('action', $this->url('sign-in'));
     $form->prepare();
@@ -19,13 +26,13 @@
     <div class="row">
         <div class="col-md-5 shadow-sm">
             <h3 class="mb-3 pt-2 text-md-center">
-                <?= $this->escapeHtml($this->translate("Sign In")) ?>
+                <?= $this->escapeHtml($this->trad->_("Sign In")) ?>
             </h3>
             
             <?= $this->form()->openTag($form) ?>
             
             <span class="form-text text-muted pb-2">
-                <?= sprintf($this->translate("Don't have an account yet ? %sJoin here%s"),
+                <?= sprintf( $this->trad->_("Don't have an account yet ? %sJoin here%s"),
                     '<a href="'.$this->url('sign-up').'">',"</a>"
                 ) ?>
             </span>

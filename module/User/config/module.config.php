@@ -51,7 +51,6 @@
                         ]
                     ]
                 ],
-    
                 'add' => [
                     'type' => Segment::class,
                     'options' => [
@@ -62,7 +61,6 @@
                         ]
                     ]
                 ],
-                
                 'edit' => [
                     'type' => Segment::class,
                     'options' => [
@@ -76,7 +74,6 @@
                         ]
                     ]
                 ],
-    
                 'save' => [
                     'type' => Segment::class,
                     'options' => [
@@ -90,7 +87,6 @@
                         ]
                     ]
                 ],
-    
                 'remove' => [
                     'type' => Segment::class,
                     'options' => [
@@ -104,7 +100,6 @@
                         ]
                     ]
                 ],
-                
                 'sign-out' => [
                     'type' => Literal::class,
                     'options' => [

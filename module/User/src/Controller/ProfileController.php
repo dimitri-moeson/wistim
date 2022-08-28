@@ -11,7 +11,6 @@
     
     use Laminas\Authentication\AuthenticationService;
     use Laminas\Db\Adapter\Adapter;
-    use Laminas\Mvc\Controller\AbstractActionController;
     use Laminas\View\Model\ViewModel;
     use PHPThumb\GD;
     use User\Form\MedicamentForm;
@@ -19,18 +18,11 @@
     use User\Model\Table\MedicamentsTable;
     use User\Model\Table\MedicamentsUsersTable;
     use User\Model\Table\UsersTable;
+    use User\Translate\TranslateAction;
 
-    class ProfileController extends AbstractActionController
+    class ProfileController extends __GlobalUserController
     {
     
-        private $adapter;
-        /**
-         * @var \User\Model\Table\UsersTable
-         */
-        private $usersTable;
-        /**
-         * @var \User\Model\Table\MedicamentsTable
-         */
         private $medicamentsTable;
         
         private $medicamentsUsersTable ;
@@ -39,8 +31,7 @@
     
         public function __construct(Adapter $adapter, UsersTable $usersTable, MedicamentsUsersTable $medicamentsUsersTable , MedicamentsTable $medicamentsTable, ClassesTable $classesTable)
         {
-            $this->adapter = $adapter;
-            $this->usersTable = $usersTable;
+           parent::__construct($adapter,$usersTable);
             $this->medicamentsTable = $medicamentsTable ;
             $this->classesTable = $classesTable ;
             $this->medicamentsUsersTable = $medicamentsUsersTable;
@@ -55,7 +46,12 @@
             
             if($auth->hasIdentity()){
                 
-                return new ViewModel(["medicaments" => $this->medicamentsTable->fetchAllMedicamentForUser($auth->getIdentity()->id)]);
+                return new ViewModel([
+    
+                    "trad" => $this->trad,
+                    "medicaments" => $this->medicamentsTable->fetchAllMedicamentForUser($auth->getIdentity()->id)
+                
+                ]);
             }
         }
     
@@ -74,6 +70,7 @@
             $createForm->setData($formData);
             
             return new ViewModel([
+                "trad" => $this->trad,
                 'form' => $createForm
             ]);
         }
@@ -93,6 +90,7 @@
             $createForm->setData($formData);
             
             return new ViewModel([
+                "trad" => $this->trad,
                 'form' => $createForm,
                 'medicament' => $formData
             ]);
@@ -136,13 +134,13 @@
                         $lastId = $this->medicamentsTable->saveMedic($data);
     
                         if($lastId!== false && $formData['medicament_id']=="") {
-                            $this->medicamentsUsersTable->save([
+                            $this->medicamentsUsersTable->saveLink([
                                 "medicament_id" => $this->medicamentsTable->fetchLast()->getMedicamentId(),
                                 "user_id" => $auth->getIdentity()->id
                             ]);
                         }
                         
-                        $this->flashMessenger()->addSuccessMessage('Medicament successfully created.');
+                        $this->flashMessenger()->addSuccessMessage(TranslateAction::getInstance()->_('Medicament successfully created.'));
                         
                     }catch (\RuntimeException $exception){
                 
@@ -177,7 +175,7 @@
                     $this->medicamentsUsersTable->deleteLink($auth->getIdentity()->id,$this->params('id'));
                     $this->medicamentsTable->deleteMedic($this->params('id'));
     
-                    $this->flashMessenger()->addSuccessMessage('Medicament successfully removed.');
+                    $this->flashMessenger()->addSuccessMessage(TranslateAction::getInstance()->_('Medicament successfully removed.'));
     
                 }
             }

@@ -13,24 +13,13 @@
     use Laminas\Authentication\AuthenticationService;
     use Laminas\Authentication\Result;
     use Laminas\Crypt\Password\Bcrypt;
-    use Laminas\Db\Adapter\Adapter;
-    use Laminas\Mvc\Controller\AbstractActionController;
     use Laminas\Session\SessionManager;
     use Laminas\View\Model\ViewModel;
     use User\Form\Auth\LoginForm;
-    use User\Model\Table\UsersTable;
+    use User\Translate\TranslateAction;
 
-    class LoginController extends AbstractActionController
+    class LoginController extends __GlobalUserController
     {
-        private $adapter;
-        private $usersTable;
-    
-        public function __construct(Adapter $adapter, UsersTable $usersTable)
-        {
-            $this->adapter = $adapter;
-            $this->usersTable = $usersTable;
-        }
-    
         public function indexAction()
         {
             $auth = new AuthenticationService();
@@ -79,12 +68,12 @@
                         switch ($authResult->getCode()){
                             
                             case Result::FAILURE_IDENTITY_NOT_FOUND :
-                                $this->flashMessenger()->addErrorMessage("unknow email");
+                                $this->flashMessenger()->addErrorMessage(TranslateAction::getInstance()->_("Unknow email"));
                                 return $this->redirect()->refresh();
                                 break;
     
                             case Result::FAILURE_CREDENTIAL_INVALID :
-                                $this->flashMessenger()->addErrorMessage("incorrect password");
+                                $this->flashMessenger()->addErrorMessage(TranslateAction::getInstance()->_("Incorrect password"));
                                 return $this->redirect()->refresh();
                                 break;
     
@@ -99,7 +88,7 @@
                                 $storage = $auth->getStorage();
                                 $storage->write($authAdapter->getResultRowObject(null,['created','modified']));
                                 
-                                $this->flashMessenger()->addSuccessMessage('Account successfully auth.');
+                                $this->flashMessenger()->addSuccessMessage(TranslateAction::getInstance()->_('Account successfully auth.'));
                                 return $this->redirect()->toRoute("profile",[
                                     'id' => $info->getId(),
                                     'firstname' => mb_strtolower($info->getFirstname())
@@ -107,7 +96,7 @@
                                 break;
                             
                             default :
-                                $this->flashMessenger()->addErrorMessage("Authentification failed");
+                                $this->flashMessenger()->addErrorMessage(TranslateAction::getInstance()->_("Authentification failed"));
                                 return $this->redirect()->refresh();
     
                                 break;
@@ -122,8 +111,11 @@
                 }
             }
     
-    
-    
-            return (new ViewModel(["form" => $loginForm]))->setTemplate("user/auth/login");
+            return (new ViewModel([
+                
+                "trad" => $this->trad,
+                "form" => $loginForm
+                
+            ]))->setTemplate("user/auth/login");
         }
     }

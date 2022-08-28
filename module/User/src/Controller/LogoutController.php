@@ -9,18 +9,13 @@
     
     namespace User\Controller;
     
-    use Laminas\Authentication\AuthenticationService;
-    use Laminas\Mvc\Controller\AbstractActionController;
-
-    class LogoutController  extends AbstractActionController
+    class LogoutController  extends __GlobalUserController
     {
         public function indexAction()
         {
-            $auth = new AuthenticationService();
-    
-            if($auth->hasIdentity()){
+            if($this->auth->hasIdentity()){
             
-                $auth->clearIdentity();
+                $this->auth->clearIdentity();
             }
             
             return $this->redirect()->toRoute("sign-in");

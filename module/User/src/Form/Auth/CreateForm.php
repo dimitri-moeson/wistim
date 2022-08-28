@@ -11,59 +11,32 @@
     
     use Laminas\Form\Form;
     use Laminas\Form\Element;
+    use User\Translate\TranslateAction;
 
     class CreateForm extends Form
     {
+        /**
+         * CreateForm constructor.
+         */
         public function __construct()
         {
             parent::__construct("new_account");
             
             $this->setAttribute("method","post");
+           
             
             # firstname input field
-            $this->add([
-                "type" => Element\Text::class ,
-                "name" => "firstname",
-                "options" => [
-                    "label" => "Firstname"
-                ],
-                "attributes" => [
-                    "required" => true ,
-                    "size" => 40 ,
-                    "maxlength" => 25,
-                    "pattern" => '^[a-zA-z0-9]+$',
-                    "data-toggle" => 'tooltip',
-                    "class" => "form-control",
-                    "title" => "Firstname must consist of alphanumeric characters only",
-                    "placeholder" => "Enter  your Firstname"
-                ]
-            ]);
+            $this->add(InputFormat::text_input("firstname","Firstname"));
             
             # lastname input field
-            $this->add([
-                "type" => Element\Text::class ,
-                "name" => "lastname",
-                "options" => [
-                    "label" => "Lastname"
-                ],
-                "attributes" => [
-                    "required" => true ,
-                    "size" => 40 ,
-                    "maxlength" => 25,
-                    "pattern" => '^[a-zA-z0-9]+$',
-                    "data-toggle" => 'tooltip',
-                    "class" => "form-control",
-                    "title" => "lastname must consist of alphanumeric characters only",
-                    "placeholder" => "Enter  your lastname"
-                ]
-            ]);
+            $this->add(InputFormat::text_input("lastname","Lastname"));
             
               # birthday input field
             $this->add([
                 "type" => Element\DateSelect::class ,
                 "name" => "birthday",
                 "options" => [
-                    "label" => "select birthday",
+                    "label" =>TranslateAction::getInstance()->_( "Select Birthday"),
                     "create_empty_option" => true,
                     "max_year" => date("Y") - 13 ,
                     "year_attributes" => [
@@ -71,6 +44,7 @@
                     ],
                     "month_attributes" => [
                         "class" => "custom-select w-30",
+                        "locale" => TranslateAction::getInstance()->getLocale() == "fr" ? "fr_FR" : "en_GB",
                     ],
                     "day_attributes" => [
                         "class" => "custom-select w-30",
@@ -83,50 +57,17 @@
             ]);
             
             # email input field
-            $this->add([
-                "type" => Element\Email::class ,
-                "name" => "email",
-                "options" => [
-                    "label" => "Email address"
-                ],
-                "attributes" => [
-                    "required" => true ,
-                    "size" => 40 ,
-                    "maxlength" => 128,
-                    "pattern" => '^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$',
-                    "autocomplete" => false ,
-                    "data-toggle" => 'tooltip',
-                    "class" => "form-control",
-                    "title" => "Provide a valid and working email",
-                    "placeholder" => "Enter  your Email"
-                ]
-            ]);
+            $this->add(InputFormat::email_input());
             
             # Password input field
-            $this->add([
-                "type" => Element\Password::class ,
-                "name" => "password",
-                "options" => [
-                    "label" => "Password"
-                ],
-                "attributes" => [
-                    "required" => true ,
-                    "size" => 40 ,
-                    "maxlength" => 25,
-                    "autocomplete" => false ,
-                    "data-toggle" => 'tooltip',
-                    "class" => "form-control",
-                    "title" => "Password must have between 8 and 25 characters",
-                    "placeholder" => "Enter  your Password"
-                ]
-            ]);
+            $this->add(InputFormat::pswd_input("password"));
             
              # confirm Password input field
             $this->add([
                 "type" => Element\Password::class ,
                 "name" => "conf_password",
                 "options" => [
-                    "label" => "verify your Password"
+                    "label" => TranslateAction::getInstance()->_("Verify your Password")
                 ],
                 "attributes" => [
                     "required" => true ,
@@ -135,30 +76,15 @@
                     "autocomplete" => false ,
                     "data-toggle" => 'tooltip',
                     "class" => "form-control",
-                    "title" => "Password must match that provided above",
-                    "placeholder" => "Enter  your Password again"
+                    "title" =>  TranslateAction::getInstance()->_("Password must match that provided above"),
+                    "placeholder" =>  TranslateAction::getInstance()->_("Enter your Password again")
                 ]
             ]);
     
             # CSRF field
-           $this->add([
-               "type" => Element\Csrf::class ,
-               "name" => "csrf",
-               "options" => [
-                   "csrf_options" => [
-                       "timeout" => 300,
-                   ]
-               ],
-           ]);
+           $this->add( InputFormat::csrf_input());
            
            # submit button
-            $this->add([
-                "type" => Element\Submit::class,
-                "name" => 'create_account',
-                "attributes" => [
-                    "value" => "Create Account",
-                    "class" => "btn btn-primary"
-                ],
-            ]);
+            $this->add(InputFormat::submit_input('create_account', "Create Account"));
         }
     }
