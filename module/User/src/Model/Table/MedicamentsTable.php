@@ -12,6 +12,7 @@
     use Laminas\Db\ResultSet\HydratingResultSet;
     use Laminas\Db\TableGateway\AbstractTableGateway;
     use Laminas\Hydrator\ClassMethodsHydrator;
+    use User\Form\Auth\InputFormat;
     use User\Model\Entity\MedicamentEntity;
 
     use Laminas\InputFilter;
@@ -101,48 +102,10 @@
     
             # filter and validate name input field
             $inputFilter->add(
-                $factory->createInput([
-            
-                    "name" => "name",
-                    "required" => true,
-                    "filters" => [
-                        ["name" => Filter\StripTags::class ],
-                        ["name" => Filter\StringTrim::class ],
-                        ["name" => I18n\FIlter\Alnum::class ],
-                    ],
-                    "validator" => [
-                        ["name" => Validator\NotEmpty::class ],
-                        [
-                            "name" => Validator\StringLength::class,
-                            "options" =>[
-                                "min" => 8 ,
-                                "max" => 25,
-                                "messages" =>[
-                                    Validator\StringLength::TOO_SHORT => 'Firstname must have at least 8 characters.',
-                                    Validator\StringLength::TOO_LONG => 'Firstname must have at most 25 characters.'
-                                ]
-                            ]
-                        ],
-                        [
-                            "name" => I18n\Validator\Alnum::class,
-                            "options" => [
-                                "messages" =>[
-                                    I18n\Validator\Alnum::NOT_ALNUM => "Firstname must consist of alphanumeric character only"
-                                ]
-                            ]
-                        ],
-                        [
-                            "name" => Validator\Db\NoRecordExists::class,
-                            "options" =>[
-                                "adapter"=>$this->adapter,
-                                "table"=> $this->table,
-                                "field" => "firstname"
-                            ],
-                        ],
-                    ],
-                ])
+                $factory->createInput(InputFormat::text_validator("name","Name"))
             );
-    
+            
+            # filter and validate photo input field
             $inputFilter->add(
                 $factory->createInput([
                     
@@ -210,26 +173,7 @@
     
             # filter and validate csrf hidden field
             $inputFilter->add(
-                $factory->createInput([
-            
-                    "name" => "csrf",
-                    "required" => true,
-                    "filters" => [
-                        ["name" => Filter\StripTags::class ],
-                        ["name" => Filter\StringTrim::class ],
-                    ],
-                    "validator" => [
-                        ["name" => Validator\NotEmpty::class ],
-                        [
-                            "name" => Validator\Csrf::class,
-                            "options" =>[
-                                "messages" =>[
-                                    Validator\Csrf::NOT_SAME => 'Oops ! Refill the form.',
-                                ]
-                            ]
-                        ],
-                    ],
-                ])
+                $factory->createInput(InputFormat::csrf_validator())
             );
             
             

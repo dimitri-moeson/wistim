@@ -19,6 +19,7 @@
     use Laminas\I18n;
     use User\Form\Auth\InputFormat;
     use User\Model\Entity\UserEntity;
+    use User\Translate\TranslateAction;
 
     class UsersTable extends AbstractTableGateway
     {
@@ -72,66 +73,12 @@
     
             # filter and validate email input field
             $inputFilter->add(
-                $factory->createInput([
-            
-                    "name" => "email",
-                    "required" => true,
-                    "filters" => [
-                        ["name" => Filter\StripTags::class ],
-                        ["name" => Filter\StringTrim::class ],
-                        ["name" => Filter\StringToLower::class ],
-                    ],
-                    "validator" => [
-                        ["name" => Validator\NotEmpty::class ],
-                        ["name" => Validator\EmailAddress::class ],
-                        [
-                            "name" => Validator\StringLength::class,
-                            "options" =>[
-                                "min" => 8 ,
-                                "max" => 128,
-                                "messages" =>[
-                                    Validator\StringLength::TOO_SHORT => 'Email must have at least 8 characters.',
-                                    Validator\StringLength::TOO_LONG => 'Email must have at most 128 characters.'
-                                ]
-                            ]
-                        ],
-                        [
-                            "name" => Validator\Db\RecordExists::class,
-                            "options" =>[
-                                "adapter"=>$this->adapter,
-                                "table"=> $this->table,
-                                "field" => "email"
-                            ],
-                        ],
-                    ],
-                ])
+                $factory->createInput(InputFormat::email_validator($this->adapter,"user", true))
             );
     
             # filter and validate password input field
             $inputFilter->add(
-                $factory->createInput([
-            
-                    "name" => "password",
-                    "required" => true,
-                    "filters" => [
-                        ["name" => Filter\StripTags::class ],
-                        ["name" => Filter\StringTrim::class ],
-                    ],
-                    "validator" => [
-                        ["name" => Validator\NotEmpty::class ],
-                        [
-                            "name" => Validator\StringLength::class,
-                            "options" =>[
-                                "min" => 8 ,
-                                "max" => 25,
-                                "messages" =>[
-                                    Validator\StringLength::TOO_SHORT => 'Password must have at least 8 characters.',
-                                    Validator\StringLength::TOO_LONG => 'Password must have at most 25 characters.'
-                                ]
-                            ]
-                        ],
-                    ],
-                ])
+                $factory->createInput(InputFormat::pswd_validator())
             );
     
             # filter and validate recall checkbox field
@@ -147,7 +94,7 @@
                     ],
                     "validator" => [
                         ["name" => Validator\NotEmpty::class ],
-                        ["name" => I18n\Validator\IsInt::class ],
+                        //["name" => I18n\Validator\IsInt::class ],
                         [
                             "name" => Validator\InArray::class,
                             "options" =>[
@@ -176,90 +123,12 @@
             
             # filter and validate firstname input field
             $inputFilter->add(
-                $factory->createInput([
-                    
-                    "name" => "firstname",
-                    "required" => true,
-                    "filters" => [
-                        ["name" => Filter\StripTags::class ],
-                        ["name" => Filter\StringTrim::class ],
-                        ["name" => I18n\FIlter\Alnum::class ],
-                    ],
-                    "validator" => [
-                        ["name" => Validator\NotEmpty::class ],
-                        [
-                            "name" => Validator\StringLength::class,
-                            "options" =>[
-                            "min" => 8 ,
-                            "max" => 25,
-                            "messages" =>[
-                                    Validator\StringLength::TOO_SHORT => 'Firstname must have at least 8 characters.',
-                                    Validator\StringLength::TOO_LONG => 'Firstname must have at most 25 characters.'
-                               ]
-                            ]
-                        ],
-                        [
-                            "name" => I18n\Validator\Alnum::class,
-                            "options" => [
-                                "messages" =>[
-                                        I18n\Validator\Alnum::NOT_ALNUM => "Firstname must consist of alphanumeric character only"
-                                ]
-                            ]
-                        ],
-                        [
-                            "name" => Validator\Db\NoRecordExists::class,
-                            "options" =>[
-                                "adapter"=>$this->adapter,
-                                "table"=> $this->table,
-                                "field" => "firstname"
-                            ],
-                        ],
-                    ],
-                ])
+                $factory->createInput(InputFormat::text_validator("firstname","Firstname"))
             );
     
             # filter and validate lastname input field
             $inputFilter->add(
-                $factory->createInput([
-            
-                    "name" => "lastname",
-                    "required" => true,
-                    "filters" => [
-                        ["name" => Filter\StripTags::class ],
-                        ["name" => Filter\StringTrim::class ],
-                        ["name" => I18n\FIlter\Alnum::class ],
-                    ],
-                    "validator" => [
-                        ["name" => Validator\NotEmpty::class ],
-                        [
-                            "name" => Validator\StringLength::class,
-                            "options" =>[
-                                "min" => 8 ,
-                                "max" => 25,
-                                "messages" =>[
-                                    Validator\StringLength::TOO_SHORT => 'Lastname must have at least 8 characters.',
-                                    Validator\StringLength::TOO_LONG => 'Lastname must have at most 25 characters.'
-                                ]
-                            ]
-                        ],
-                        [
-                            "name" => I18n\Validator\Alnum::class,
-                            "options" => [
-                                "messages" =>[
-                                    I18n\Validator\Alnum::NOT_ALNUM => "Lastname must consist of alphanumeric character only"
-                                ]
-                            ]
-                        ],
-                        [
-                            "name" => Validator\Db\NoRecordExists::class,
-                            "options" =>[
-                                "adapter"=>$this->adapter,
-                                "table"=> $this->table,
-                                "field" => "lastname"
-                            ],
-                        ],
-                    ],
-                ])
+                $factory->createInput(InputFormat::text_validator("lastname","Lastname"))
             );
     
             # filter and validate birthday select field
@@ -286,66 +155,12 @@
             
             # filter and validate email input field
             $inputFilter->add(
-                $factory->createInput([
-            
-                    "name" => "email",
-                    "required" => true,
-                    "filters" => [
-                        ["name" => Filter\StripTags::class ],
-                        ["name" => Filter\StringTrim::class ],
-                        ["name" => Filter\StringToLower::class ],
-                    ],
-                    "validator" => [
-                        ["name" => Validator\NotEmpty::class ],
-                        ["name" => Validator\EmailAddress::class ],
-                        [
-                            "name" => Validator\StringLength::class,
-                            "options" =>[
-                                "min" => 8 ,
-                                "max" => 128,
-                                "messages" =>[
-                                    Validator\StringLength::TOO_SHORT => 'Email must have at least 8 characters.',
-                                    Validator\StringLength::TOO_LONG => 'Email must have at most 128 characters.'
-                                ]
-                            ]
-                        ],
-                        [
-                            "name" => Validator\Db\NoRecordExists::class,
-                            "options" =>[
-                                "adapter"=>$this->adapter,
-                                "table"=> $this->table,
-                                "field" => "email"
-                            ],
-                        ],
-                    ],
-                ])
+                $factory->createInput(InputFormat::email_validator($this->adapter,"user", false ))
             );
     
             # filter and validate password input field
             $inputFilter->add(
-                $factory->createInput([
-            
-                    "name" => "password",
-                    "required" => true,
-                    "filters" => [
-                        ["name" => Filter\StripTags::class ],
-                        ["name" => Filter\StringTrim::class ],
-                    ],
-                    "validator" => [
-                        ["name" => Validator\NotEmpty::class ],
-                        [
-                            "name" => Validator\StringLength::class,
-                            "options" =>[
-                                "min" => 8 ,
-                                "max" => 25,
-                                "messages" =>[
-                                    Validator\StringLength::TOO_SHORT => 'Password must have at least 8 characters.',
-                                    Validator\StringLength::TOO_LONG => 'Password must have at most 25 characters.'
-                                ]
-                            ]
-                        ],
-                    ],
-                ])
+                $factory->createInput(InputFormat::pswd_validator())
             );
     
             # filter and validate confirm password input field
@@ -366,8 +181,8 @@
                                 "min" => 8 ,
                                 "max" => 25,
                                 "messages" =>[
-                                    Validator\StringLength::TOO_SHORT => 'confirm Password must have at least 8 characters.',
-                                    Validator\StringLength::TOO_LONG => 'confirm Password must have at most 25 characters.'
+                                    Validator\StringLength::TOO_SHORT => TranslateAction::getInstance()->_(  'confirm Password must have at least 8 characters.'),
+                                    Validator\StringLength::TOO_LONG => TranslateAction::getInstance()->_(  'confirm Password must have at most 25 characters.'),
                                 ]
                             ]
                         ],
@@ -376,7 +191,7 @@
                             "options" =>[
                                 "token" => "password" ,
                                 "messages" =>[
-                                    Validator\Identical::NOT_SAME => 'confirm Password do not match.',
+                                    Validator\Identical::NOT_SAME => TranslateAction::getInstance()->_(   'confirm Password do not match.'),
                                 ]
                             ]
                         ],

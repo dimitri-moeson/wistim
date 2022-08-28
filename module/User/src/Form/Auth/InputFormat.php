@@ -153,6 +153,34 @@
                 ],
             ] ;
         }
+    
+        public static function text_validator($name,$label)
+        {
+            return [
+    
+                "name" => $name ,
+                "required" => true,
+                "filters" => [
+                    ["name" => Filter\StripTags::class ],
+                    ["name" => Filter\StringTrim::class ],
+                    //["name" => I18n\FIlter\Alnum::class ],
+                ],
+                "validator" => [
+                    ["name" => Validator\NotEmpty::class ],
+                    [
+                        "name" => Validator\StringLength::class,
+                        "options" =>[
+                            "min" => 8 ,
+                            "max" => 25,
+                            "messages" =>[
+                                Validator\StringLength::TOO_SHORT => TranslateAction::getInstance()->_( $label.' must have at least 8 characters.'),
+                                Validator\StringLength::TOO_LONG => TranslateAction::getInstance()->_( $label.' must have at most 25 characters.'),
+                            ]
+                        ]
+                    ],
+                ],
+            ];
+        }
         
         public static function csrf_validator()
         {
@@ -171,6 +199,33 @@
                         "options" =>[
                             "messages" =>[
                                 Validator\Csrf::NOT_SAME => TranslateAction::getInstance()->_( 'Oops ! Refill the form.'),
+                            ]
+                        ]
+                    ],
+                ],
+            ];
+        }
+    
+        public static function pswd_validator()
+        {
+            return [
+    
+                "name" => "password",
+                "required" => true,
+                "filters" => [
+                    ["name" => Filter\StripTags::class ],
+                    ["name" => Filter\StringTrim::class ],
+                ],
+                "validator" => [
+                    ["name" => Validator\NotEmpty::class ],
+                    [
+                        "name" => Validator\StringLength::class,
+                        "options" =>[
+                            "min" => 8 ,
+                            "max" => 25,
+                            "messages" =>[
+                                Validator\StringLength::TOO_SHORT => TranslateAction::getInstance()->_(  'Password must have at least 8 characters.'),
+                                Validator\StringLength::TOO_LONG => TranslateAction::getInstance()->_(  'Password must have at most 25 characters.'),
                             ]
                         ]
                     ],

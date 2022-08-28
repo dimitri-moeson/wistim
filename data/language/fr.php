@@ -32,7 +32,21 @@
         "Enter Password" => "Saisissez votre mot de passe" ,
         "Password must have between 8 and 25 characters" => "le mot de passe doit avoir une longueur comprise entre 8 et 25 caractères.",
         'Oops ! Refill the form.' => "Aie ! Merci de remplir à nouveau le formulaire.",
-        
+    
+        'Firstname must have at least 8 characters.' => "Le Prénom doit contenir au moins 8 caracteres",
+        'Firstname must have at most 25 characters.' => "Le Prénom doit contenir au plus 25 caracteres",
+        "Firstname must consist of alphanumeric character only"=> "Le prénom ne doit contenir que des caractères alhanumériques",
+    
+        'Lastname must have at least 8 characters.' => "Le Nom de famille doit contenir au moins 8 caracteres",
+        'Lastname must have at most 25 characters.' => "Le Nom de famille doit contenir au plus 25 caracteres",
+        "Lastname must consist of alphanumeric character only"=> "Le Nom de famille ne doit contenir que des caractères alhanumériques",
+    
+        'Email must have at least 8 characters.' => "Le Courriel doit contenir au moins 8 caracteres",
+        'Email must have at most 25 characters.' => "Le Courriel doit contenir au plus 25 caracteres",
+    
+        'Password must have at least 8 characters.' => "Le mot de passe doit contenir au moins 8 caracteres",
+        'Password must have at most 25 characters.' => "Le mot de passe doit contenir au plus 25 caracteres",
+
         "Firstname" => "Prénom",
         "Enter Firstname" => "Saisissez votre prénom" ,
         "Lastname" => "Nom de famille",
