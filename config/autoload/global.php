@@ -47,14 +47,4 @@ return [
                     PDO::MYSQL_ATTR_INIT_COMMAND  => "SET NAMES 'UTF8';",
             ],
     ],
-    'translator' => [
-        'locale' => 'en_GB',
-        'translation_file_patterns' => [
-            [
-                'type'     => 'gettext',
-                'base_dir' => getcwd() .  '/data/language',
-                'pattern'  => '%s.mo',
-            ],
-        ],
-    ],
 ];

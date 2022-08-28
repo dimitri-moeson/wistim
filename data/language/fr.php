@@ -14,6 +14,8 @@
         'car'   => 'voiture',
         'train' => 'train',
         
+        "Welcome" => "Bienvenue",
+        
         "Join" => "Rejoignez nous",
         "Login" => "Identifiez-vous",
         "Profile" => "Votre compte",
