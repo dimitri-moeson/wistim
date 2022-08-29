@@ -96,7 +96,7 @@
                                 break;
                             
                             default :
-                                $this->flashMessenger()->addErrorMessage(TranslateAction::getInstance()->_("Authentification failed"));
+                                $this->flashMessenger()->addErrorMessage(TranslateAction::getInstance()->_("Authentification failed").print_r($authResult->getMessages(),true ));
                                 return $this->redirect()->refresh();
     
                                 break;

@@ -13,6 +13,11 @@
  */
 
 use Laminas\Db\Adapter;
+    
+    $database = "laminas";
+    $hostname = "localhost";
+    $username = "root";
+    $password = "";
 
 return [
     // ...
@@ -38,11 +43,11 @@ return [
     ] ,
     
     'db'  => [
-            'driver'  => 'Pdo_Mysql',
-            'dsn'  => 'mysql:dbname=laminas;hostname=localhost',
-            'username' => 'root',
-            'password' => '',
-           'driver_options' => [
+            'driver'  => 'pdo',
+            'dsn'  => 'mysql:dbname='.$database.';hostname='.$hostname,
+            'username' => $username,
+            'password' => $password,
+            'driver_options' => [
                 
                     PDO::MYSQL_ATTR_INIT_COMMAND  => "SET NAMES 'UTF8';",
             ],
