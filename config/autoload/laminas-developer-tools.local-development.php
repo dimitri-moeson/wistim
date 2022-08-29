@@ -17,7 +17,7 @@ return [
              * Expects: bool
              * Default: true
              */
-            'enabled' => true,
+            'enabled' => false,
 
             /**
              * Enables or disables the strict mode. If the strict mode is enabled, any error will throw an exception,
@@ -109,7 +109,7 @@ return [
              * Expects: bool
              * Default: false
              */
-            'enabled' => true,
+            'enabled' => false,
 
             /**
              * If enabled, every empty collector will be hidden.
@@ -117,7 +117,7 @@ return [
              * Expects: bool
              * Default: false
              */
-            'auto_hide' => false,
+            'auto_hide' => true,
 
             /**
              * The Toolbar position.
