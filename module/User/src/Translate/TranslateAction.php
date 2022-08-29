@@ -33,7 +33,6 @@
         private function save_locale()
         {
             setcookie($this->field, $this->locale,time()+60*60*24*30 , '/');
-            $_COOKIE[$this->field] = $this->locale;
         }
         /**
          * @param mixed $locale
